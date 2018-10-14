@@ -1,0 +1,23 @@
+Ejercicio 6
+
+1. Meta
+    Para crear un archivo binario con datos numéricos byte en disco llamado 
+Sample1.data Leer el archivo recien creado abriendolo del disco y desplegarlo
+en una pizarra de información
+
+2. Datos
+    Escribir("Deme el nombre del archivo: "); aux = ?
+    Usando un arreglo byteArray = {10, 20, 30, 40, 50, 60, 70, 80}
+    GuardaArchivo(byteArray);
+
+3. Cálculos
+    No hay cálculos
+
+4. Resultados
+    Leer("Sample1.data");
+        desde i = 0 hasta i long del Archivo();
+            incrementa i para
+            Escribir(byteBuff[i] + " ");
+
+5. Navegabilidad
+    Termina sin restricción alguna

@@ -1,0 +1,78 @@
+Ejercicio 7
+
+1. Meta
+    Permite ver que los archivos solo significan lo que se desea interpretar
+de ellos, leyendo datos en binario como chars o como numeros, guardandolos en un
+archivo binario y luego leyendo su contenido y desplegandolo en pantalla con el
+formato leido.
+(Ojo: cada formato es solo la interpretacion de los mismos datos)
+
+2. Datos: ir al paso 5
+    2.1 leeBinEsChar() 
+        empezar
+            Escribir("Dame un numero de 32 bits en binario: "); num = ?
+            guardarComoChar(0 - 15);
+            guardarComoChar(16 - 31);
+        terminar
+
+    2.2 leeChatEsArch()
+        empezar
+            Escribir("Dame un char: "); m = ?
+            Escribir("Dame otro char: "); n = ?;
+            guardarComoChar(m);
+            guardarComoChar(n);
+        terminar
+
+    2.3 leeShortEsArch()
+        empezar
+            Escribir("Dame un numero short: "); m = ?
+            Escribir("Dame otro numero short: "); n = ?;
+            guardarComoShort(m);
+            guardarComoShort(n);
+        terminar
+
+    2.4 leeIntEsArch()
+        empezar
+            Escribir("Dame un numero entero: ") n = ?;
+            guardaComoInt(n)
+        terminar
+
+3. Calculos
+    No hay calculos
+
+4. Resultado
+    empezar
+        AbrirArch(entrada)
+        m = leeArch(entrada)
+        n = leeArch(entrada)
+        Escribir("en binario: " + bitpatterns(m))
+        Escribir("en binario: " + bitpatterns(n))
+        Escribir("como char: " + m + " " + n)
+        Escribir("short: " + toShort(m, n))
+        Escribir("entero: " + toInt(m, n))
+        Escribir("flotante: " + toFloat(m, n))
+        cierrArch(entrada) 
+    terminar
+
+5. Navegabilidad
+    Hacer empezar
+        Escribir("Menu de Captura\n");
+        Escribir("Desea capturar:\n");
+        Escribir("1.- En binario");
+        Escribir("2.- En caracter");
+        Escribir("3.- Numero Short");
+        Escribir("4.- Numero Entero");
+        Escribir("5.- Flotante");
+        Escribir("6.- Salir")
+        Escribir("Su eleccion: ");
+        aux = t.next();
+    Mientras(!isNume(aux));
+    op = Integer.parseInt(aux)
+    segun (op) empezar
+        caso 1: leeBinEsChArch(); break;
+        caso 2: leeCharEsArch(); break;
+        caso 3: leeShortEsArch(); break;
+        caso 4: leeEntEsArch(); break;
+        caso 5: leeFloatEsArch(); break;
+        omision: Escribir("Opciones validas 1 - 5");
+    Terminar
