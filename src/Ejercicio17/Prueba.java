@@ -36,7 +36,7 @@ public class Prueba {
     
     public int factorialRecursivo(int n){
         if(n > 1)
-            return n * factorialRecursivo(n-1);
+            return n * factorialRecursivo(n - 1);
         else 
             return 1;
     }
