@@ -11,7 +11,7 @@ public class PruebaRecursiva {
     }
     
     int[] calculoRecursivo(int x){
-       
+        System.out.println("PUTO");
         return n;
     }
     
