@@ -11,13 +11,14 @@ public class PruebaRecursiva {
     }
     
     int calculoRecursivo(int x){
+        print(x + "\n");
         if(x > 2) return calculoRecursivo(x - 1) + calculoRecursivo(x - 2);
         else return x;
     }
     
     void resultados(int x){
         for (int i = 0; i < x; i++) {
-            System.out.println(calculoRecursivo(i));
+            print(calculoRecursivo(i)+"\n");
         }
     }
     
@@ -27,6 +28,7 @@ public class PruebaRecursiva {
         
         c.tiempoIncio();
         p.resultados(25);
+        c.tiempoFinal();
         c.resultado(c.tiempoTotal());
         
     }
