@@ -1,7 +1,6 @@
 package Ejercicio11;
 
 public interface Settable {
-    public void add(Object o);
 
     public boolean isEmpty();
     public int cardinality();

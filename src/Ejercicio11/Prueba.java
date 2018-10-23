@@ -51,6 +51,9 @@ public class Prueba {
         Set s3 = s2.difference(s1);
         s3.print();
         
+        System.out.println("");
+        s1.remove("putito");
+        s1.print();
         
         
        

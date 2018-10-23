@@ -2,7 +2,6 @@ package Ejercicio11;
 
 public class Set implements Settable{
     private Object[] element;
-    private int c;
 
     public Set() {
         this.element = new Object[5];
@@ -16,7 +15,7 @@ public class Set implements Settable{
     }
     
     public Set(Set s1){
-        this.element = new Object[s1.space()];
+        this.element = new Object[s1.cardinality()];
         
         for (int i = 0; i < element.length; i++) 
             element[i] = s1.element[i];
@@ -24,12 +23,11 @@ public class Set implements Settable{
     
     public int space(){ return this.element.length; }
 
-    @Override
     public void add(Object o) {
         int n;
         
         try {
-            if(full()) moreSpace();
+            if(isFull()) moreSpace();
             n = space();
             for (int i = 0; i < n; i++) {
                 if (element[i] == null && !pertain(o)){ element[i] = o; } 
@@ -42,7 +40,7 @@ public class Set implements Settable{
     @Override
     public boolean isEmpty() {
         try{
-            return space() == 0;
+            return this.cardinality() == 0;
         }catch(Exception ex){
             System.err.println("Error en isEmpty" + ex);
             return false;
@@ -51,8 +49,8 @@ public class Set implements Settable{
 
     @Override
     public Set union(Set s1) {
-        int n = space();
-        int m = s1.space();
+        int n = this.cardinality();
+        int m = s1.cardinality();
         Set s2 = new Set(n + m);
         
         try{
@@ -74,8 +72,8 @@ public class Set implements Settable{
 
     @Override
     public Set intersection(Set s1) {
-        int n = space();
-        int m = s1.space();
+        int n = this.cardinality();
+        int m = s1.cardinality();
         Set s2 = new Set(n + m);
         
         try {
@@ -133,20 +131,7 @@ public class Set implements Settable{
         }
     }
     
-    public Object[] auxiliary() {
-        int n = space();
-        Object[] aux = new Object[n];
-
-        for (int i = 0; i < n; i++) {
-            if(this.element[i] == null){
-                i = i + 1;
-            }
-            aux[i] = element[i];
-        }
-        return aux;
-    }
-    
-    public boolean full(){
+    public boolean isFull(){
         int i = 0;
         
         for(Object x: this.element)
@@ -168,40 +153,6 @@ public class Set implements Settable{
         element = aux;
     }
     
-    public void remove() {
-        try{
-            element = new Object[0];
-        }catch(Exception ex){
-            System.err.println("Error en remove simple " + ex);
-        }
-    }
-
-    public void remove(Object o) {    
-        try{
-            if(!isEmpty()){
-                for (int i = 0; i < space(); i++) 
-                    element = auxiliary();  
-            }
-        }catch(Exception ex){
-            System.err.println("Error en remove object " + ex);
-        }
-    }
-    
-    public void print(){
-        try {
-            System.out.print("{ ");
-            for (int i = 0; i < space(); i++) {
-                if (element[i] != null) {
-                    System.out.print(this.element[i] + " ");
-                }
-            }
-            System.out.print("}");
-        }catch(Exception ex){
-            System.err.println("Error de impresion " + ex);
-        }
-        
-    }
-
     @Override
     public int cardinality() {
         int x = 0;
@@ -214,4 +165,37 @@ public class Set implements Settable{
 //        } 
         return x;
     }
+    
+    public void remove() {
+        try{
+            element = new Object[0];
+        }catch(Exception ex){
+            System.err.println("Error en remove simple " + ex);
+        }
+    }
+
+    public void remove(Object o) {    
+        try{
+            if(!isEmpty()){
+                for(int i = 0; i < cardinality(); i++)
+                    if(this.pertain(o) && o.equals(this.element[i])) 
+                        this.element[i] = null;   
+            }
+        }catch(Exception ex){
+            System.err.println("Error en remove object " + ex);
+        }
+    }
+    
+    public void print(){
+        try {
+            System.out.print("{ ");
+            for (int i = 0; i < cardinality(); i++) 
+                if (element[i] != null) 
+                    System.out.print(this.element[i] + " ");
+            System.out.print("} ");
+        }catch(Exception ex){
+            System.err.println("Error de impresion " + ex);
+        }
+        
+    } 
 }
