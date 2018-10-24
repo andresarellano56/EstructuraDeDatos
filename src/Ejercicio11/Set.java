@@ -108,9 +108,9 @@ public class Set implements Settable{
         
         try{
             if(!isEmpty()){
-                for(Object x: this.element){
-                    if(o.equals(x)) a = 1;
-                }
+                for(Object x: this.element)
+                    if(x != null)
+                        if(o.equals(x)) a = 1;
             }
             return a == 1;
         }catch(Exception ex){

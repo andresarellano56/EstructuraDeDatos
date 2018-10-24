@@ -1,4 +1,4 @@
-package Ejercicio12;
+package Ejercicio13;
 
 import Ejercicio11.Set;
 import java.io.BufferedReader;
