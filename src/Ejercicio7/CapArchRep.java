@@ -17,6 +17,11 @@ public class CapArchRep {
         ds = new DataOutputStream(fw);
     }
     
+    void cierraSal() throws IOException{
+        ds.close();
+        fw.close();
+    }
+    
     void inicio(){
         System.out.println("Para ilustrar la interpretacion");
         System.out.println("del formato de datos leidos del teclado");
@@ -37,7 +42,7 @@ public class CapArchRep {
         short BIT1_MASK = 1;
         final char[] bits = new char[0];
         
-        for (short i = 7; i >= 0; i--) {
+        for (short i = 15; i >= 0; i--) {
             bits[i] = (value & BIT1_MASK) == 1 ? '1' : '0';
             value >>>= 1;
         }
@@ -46,7 +51,7 @@ public class CapArchRep {
     
     boolean isBin(String cad){
         for (int i = 0; i < cad.length(); i++) 
-            if(cad.charAt(i) != '0' && cad.charAt(i) != 1)
+            if(cad.charAt(i) != '0' && cad.charAt(i) != '1')
                 return false;
         return true;
     }
@@ -70,19 +75,15 @@ public class CapArchRep {
         return op;
     }
     
-    void captura() throws IOException{
-        int op =  menu();
-        
-        if(op != 6){
-            switch(op){
-                case 1: leeBinEsChArch(); break;
-                case 2: leeCharEsArch(); break;
-                case 3: leeShortEsArch(); break;
-                case 4: leeEntEsArch(); break;
-                case 5: leeFloatEsArch();break;
-                default: System.out.println("Opciones validas 1-5");  
-            }
-        }
+    void captura(int op) throws IOException{
+        switch(op){
+            case 1: leeBinEsChArch(); break;
+            case 2: leeCharEsArch(); break;
+            case 3: leeShortEsArch(); break;
+            case 4: leeEntEsArch(); break;
+            case 5: leeFloatEsArch();break;
+            default: System.out.println("Opciones validas 1-5");  
+        }  
     }
     
     int toInt(String s){
@@ -117,13 +118,19 @@ public class CapArchRep {
     
     void leeBinEsChArch(){ //con c de la a la z
        String entra = "";
+       String first = "";
+       String second = "";
        
        do{
-           System.out.print("Deme un numero de 32 bits en binario: ");
+           System.out.print("Deme char de 32 bits en binario: ");
            entra = t.nextLine();
-       }   while(!isBin(entra));
+       }   while(!isBin(entra)||entra.length()!=32);
+       first = entra.substring(0, 15);
+       second = entra.substring(16, 31);
        m = (char) toInt(entra.substring(0, 15));
+        System.out.println(first + " " + toInt(first) + m);
        n = (char) toInt(entra.substring(16, 31));
+        System.out.println(second + " " + toInt(second) + n);
        try{
            ds.writeChar(m);
            ds.writeChar(n);
@@ -182,9 +189,9 @@ public class CapArchRep {
     void r3f(short n){
         System.out.print("En el archivo hay un numero con formato binario: ");
         System.out.println(bitPattern(n));
-        System.out.printf("el mismo como char es %c\n", n);
+        System.out.printf("el mismo como char es %c\n", (char) n);
         System.out.printf("se ve como un numero corto asi: %d\n", n);
-        System.out.printf("con formato decimal %d\n", n);
+        System.out.printf("con formato decimal %d\n",(float) n);
     }
     
     void reporta() throws IOException { // todos los formatos
@@ -196,6 +203,10 @@ public class CapArchRep {
         abreArchivo();
         num = dis.readShort();
         r3f(num);
+        o = dis.readShort();
+        r3f(o);
+        dis.close();
+        abreArchivo();
         n = dis.readInt();
         System.out.println("El numero entero es: " + n);
         dis.close();
@@ -207,11 +218,15 @@ public class CapArchRep {
     
     public static void main(String[] args) throws IOException{
         CapArchRep car = new CapArchRep();
+        int opcion;
         
         car.inicio();
-        car.abreSal();
-        car.captura();
-        car.reporta();
+        while((opcion = car.menu()) != 5){
+            car.abreSal();
+            car.captura(opcion);
+            car.reporta();
+        }
+        car.cierraSal(); 
     }
     
 }

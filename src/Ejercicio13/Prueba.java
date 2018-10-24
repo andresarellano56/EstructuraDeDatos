@@ -17,7 +17,7 @@ public class Prueba {
     FileReader fr;
     BufferedReader br;
     Scanner leer;
-    String path, n = "", m, elementos;
+    String path, n, m, elementos;
     String[] o;
     int c;
     Set s1, s2, u, d, i;
@@ -56,7 +56,7 @@ public class Prueba {
             }
             print("\n");
         }catch(IOException ex){
-            System.err.println("Error en ingresaConjunto " + ex);
+            System.err.println("Error en conjuntoNuevo " + ex);
         } 
     }
     
@@ -69,14 +69,13 @@ public class Prueba {
             }while(!f.exists()); 
             elementos = read(n);
             o = elementos.split(" ");
-            for(String x: o)
-                s.add(x);
+            for(String x: o) s.add(x);
         }catch(IOException ex){
-            System.err.println("Error en leerConjunto " + ex);
+            System.err.println("Error en leerElementos " + ex);
         }  
     }   
     
-    public void operaciones(){
+    public void calculos(){
         s1 = new Set();
         leerElementos(1, s1);
         
@@ -118,7 +117,7 @@ public class Prueba {
                     conjuntoNuevo();
                     break;
                 case 2:
-                    operaciones();
+                    calculos();
                     resultados();
                     break;
                 case 3: break;
@@ -135,7 +134,7 @@ public class Prueba {
             fw = new FileWriter(f, true);
             bw = new BufferedWriter(fw);
         }catch(IOException ex){
-            System.err.println("Error en abrir el archivo para escribir " + ex);
+            System.err.println("Error en abrir el archivo para escribir " +ex);
         }
     }
     
@@ -145,10 +144,10 @@ public class Prueba {
             fr = new FileReader(f);
             br = new BufferedReader(fr);
         }catch(IOException ex){
-            System.err.println("Error en abrir el archivo para leer " + ex);
+            System.err.println(ex);
         }
     }
-    
+     
     public void write(String n, String o) throws IOException{
         try{
             openOut(n);
