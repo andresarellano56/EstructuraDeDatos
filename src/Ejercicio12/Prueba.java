@@ -1,43 +1,138 @@
 package Ejercicio12;
 
+import Ejercicio11.Set;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Prueba {
-
+    
+    File f;
     FileWriter fw;
     BufferedWriter bw;
     FileReader fr;
     BufferedReader br;
     Scanner leer;
-    String path;
-
+    String path, n = "", m, elementos;
+    String[] o;
+    int c;
+    Set s1, s2, u, d, i;
+    
     public Prueba() {
         leer = new Scanner(System.in);
-        path = "\\Conjuntos\\";
+        path = "conjunto\\";
     }
      
     public static void main(String[] args) throws IOException {
         Prueba p = new Prueba();        
-        System.out.println(p.read("Set"));
+        
+        p.meta();
+        p.navegabilidad();
     }
     
     void meta(){
         print("Realizar un programa que permita probar las prestaciones\n");
-        print("del ADT Conjunto de forma persistente.");
+        print("del ADT Conjunto de forma persistente.\n");
     }
     
-    public void ingresaConjunto(){
-        print("Dame nombre del conjunto: "); 
+    public void conjuntoNuevo() {
+        try{
+            print("Dame nombre del conjunto: ");
+            n = leer.next();
+            do{
+                print("Dame numero de elementos: ");
+                m = leer.next();
+            }while(!isNum(m));
+            c = Integer.parseInt(m);
+            openOut(n);
+            for (int i = 0; i < c; i++) {
+                print("Dame elemento: ");
+                m = leer.next();
+                write(n, m);
+            }
+            print("\n");
+        }catch(IOException ex){
+            System.err.println("Error en ingresaConjunto " + ex);
+        } 
+    }
+    
+    public void leerElementos(int i, Set s){
+        try{
+            do{
+                print("Dame nombre del Conjunto #" + i + ": ");
+                n = leer.next();
+                openIn(n);
+            }while(!f.exists()); 
+            elementos = read(n);
+            o = elementos.split(" ");
+            for(String x: o)
+                s.add(x);
+        }catch(IOException ex){
+            System.err.println("Error en leerConjunto " + ex);
+        }  
+    }   
+    
+    public void operaciones(){
+        s1 = new Set();
+        leerElementos(1, s1);
+        
+        s2 = new Set();
+        leerElementos(2, s2);
+
+        u = s1.union(s2);
+        i = s1.intersection(s2);
+        d = s1.difference(s2);
+    }
+    
+    public void resultados(){
+        s1.print();
+        s2.print();
+        print("Union: ");
+        u.print();
+        print("Interseccion: ");
+        i.print();
+        print("Diferencia: ");
+        d.print();
+        print("\n");
+    }
+    
+    public void navegabilidad(){
+        String s;
+        int op;
+        
+        do{
+            print("1. Ingresar un nuevo conjunto a la lista\n");
+            print("2. Realizar operaciones entre conjuntos\n");
+            print("3. Salir\n");
+            do{
+                print("Que deseas hacer: ");
+                s = leer.next();
+            }while(!isNum(s));
+            op = Integer.parseInt(s);
+            switch(op){
+                case 1: 
+                    conjuntoNuevo();
+                    break;
+                case 2:
+                    operaciones();
+                    resultados();
+                    break;
+                case 3: break;
+                default:
+                    print("Opcion erronea \n");
+                    break;
+            }    
+        }while(op != 3);
     }
     
     public void openOut(String n){
-        try{
-            fw = new FileWriter(path + n + ".txt", true);
+        try{ 
+            f = new File(path + n + ".txt");
+            fw = new FileWriter(f, true);
             bw = new BufferedWriter(fw);
         }catch(IOException ex){
             System.err.println("Error en abrir el archivo para escribir " + ex);
@@ -46,7 +141,8 @@ public class Prueba {
     
     public void openIn(String n){
         try{
-            fr = new FileReader(path + n + ".txt");
+            f = new File(path + n + ".txt");
+            fr = new FileReader(f);
             br = new BufferedReader(fr);
         }catch(IOException ex){
             System.err.println("Error en abrir el archivo para leer " + ex);
@@ -57,7 +153,7 @@ public class Prueba {
         try{
             openOut(n);
             for (int i = 0; i < o.length(); i++) {
-                bw.write(o);
+                bw.write(o + " ");
             }
             bw.flush();
         }catch(IOException ex){
@@ -69,15 +165,28 @@ public class Prueba {
     }
     
     public String read(String n) throws IOException{
-        String aux = "";
-        
+        String aux, a;
+        StringBuilder c = new StringBuilder();
+ 
         openIn(n);
-        while(br.readLine() != null){
-            aux = br.readLine();
+        while((a = br.readLine()) != null){
+            c.append(a);
         }
-        
+        aux = c.toString();
+        fr.close();
+        br.close(); 
         return aux;
     }
     
     void print(String s){ System.out.print(s); }
+    
+    boolean isNum(String s){
+        try{
+            Integer.parseInt(s);
+            return true;
+        }catch(NumberFormatException ex){
+            System.err.println("No es numero, Intentelo de nuevo");
+            return false;
+        }
+    }
 }

@@ -62,8 +62,6 @@ public class Set implements Settable{
                     s2.add(x);
                 }
             }
-//          for (int i = 0; i < n; i++) { s2.element[i] = element[i]; }
-//          for (int i = 0; i < m; i++) { s2.element[n + i] = s1.element[i]; } 
         }catch(Exception ex){
             System.err.println("Error en Union " + ex);
         }
@@ -82,13 +80,6 @@ public class Set implements Settable{
                     s2.add(x);
                 }
             }
-//            for (int i = 0; i < n; i++) {
-//                for (int j = 0; j < m; j++) {
-//                    if (this.element[i].equals(s1.element[j])) {
-//                        aux[i] = element[i];
-//                    }
-//                }
-//            }
         }catch(Exception ex){
             System.err.println("Error en Intersection " + ex);
         }
@@ -120,13 +111,10 @@ public class Set implements Settable{
                 for(Object x: this.element){
                     if(o.equals(x)) a = 1;
                 }
-//              for (int i = 0; i < space(); i++) {
-//                    if(o.equals(element[i])) a = 1;
-//              }
             }
             return a == 1;
         }catch(Exception ex){
-            System.err.println("Error en pertain " + ex);
+            //System.err.println("Error en pertain " + ex);
             return false;
         }
     }
@@ -135,9 +123,7 @@ public class Set implements Settable{
         int i = 0;
         
         for(Object x: this.element)
-            if(x != null) i++;
-//        for (int i = 0; i < space(); i++) 
-//            if(this.element[i] != null) i++;     
+            if(x != null) i++;  
 
         return i == space();
     }
@@ -160,9 +146,6 @@ public class Set implements Settable{
         for(Object o: this.element){
             if(o != null) x++;
         }
-//        for (int i = 0; i < space(); i++) {
-//            if(element[i] != null) x++;
-//        } 
         return x;
     }
     
@@ -192,7 +175,7 @@ public class Set implements Settable{
             for (int i = 0; i < cardinality(); i++) 
                 if (element[i] != null) 
                     System.out.print(this.element[i] + " ");
-            System.out.print("} ");
+            System.out.print("} \n");
         }catch(Exception ex){
             System.err.println("Error de impresion " + ex);
         }
