@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Prueba {
     
     Scanner leer = new Scanner(System.in);
-    int n;
+    double n;
     
     public static void main(String[] args) {
         Prueba p = new Prueba();     
@@ -15,7 +15,7 @@ public class Prueba {
         }while(p.navegabilidad().equalsIgnoreCase("s"));
     }
     
-    public int datos(){
+    public double datos(){
         String s;
         
         do{
@@ -25,8 +25,8 @@ public class Prueba {
         return n = Integer.parseInt(s);      
     }
     
-    public int factorialIterativo(int n){
-        int fac = 1;
+    public double factorialIterativo(double n){
+        double fac = 1;
         
         for (int i = 1; i <= n; i++) {
             fac = fac * i;
@@ -34,16 +34,16 @@ public class Prueba {
         return fac;
     }
     
-    public int factorialRecursivo(int n){
+    public double factorialRecursivo(double n){
         if(n > 1)
             return n * factorialRecursivo(n - 1);
         else 
             return 1;
     }
     
-    public void resultados(int n){
-        int a = factorialIterativo(n);
-        int b = factorialIterativo(n);
+    public void resultados(double n){
+        double a = factorialIterativo(n);
+        double b = factorialRecursivo(n);
         
         System.out.println("Resultado n! iterativo = " + a);
         System.out.println("Resultado n! recursivo = " + b);

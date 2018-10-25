@@ -67,7 +67,7 @@ public class KnightTour {
                                 mov, xc, yc)) 
                     return true; 
                 else
-                    mov[sx][sy] = -1;// backtracking 
+                    mov[sx][sy] = -1;
             } 
         } 
         return false; 

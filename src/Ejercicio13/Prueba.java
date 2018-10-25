@@ -37,6 +37,9 @@ public class Prueba {
     void meta(){
         print("Realizar un programa que permita probar las prestaciones\n");
         print("del ADT Conjunto de forma persistente.\n");
+        print("El programa debará poder crear un archivo nuevo por cada \n");
+        print("conjunto nuevo que ingrese el usuario y mostrar los \n");
+        print("resultados en consola");
     }
     
     public void conjuntoNuevo() {
