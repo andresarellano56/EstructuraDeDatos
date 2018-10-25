@@ -107,6 +107,5 @@ public class KnightTour {
             System.err.println("No es numero, Intentelo de nuevo");
             return false;
         }
-    }
-        
+    }  
 }
