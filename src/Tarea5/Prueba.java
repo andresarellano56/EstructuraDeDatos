@@ -8,8 +8,7 @@ public class Prueba {
     BufferedWriter bw;
     FileReader r;
     BufferedReader br;
-    String nom, ape, sex, dir, con;
-    int d, m, y;
+    String dato[] = new String[7];
     Scanner leer = new Scanner(System.in);
 
     public void meta(){
@@ -22,18 +21,14 @@ public class Prueba {
     public void registrarse() throws IOException{
         print("Ingresa la direccion de correo: ");
         String aux = leer.nextLine();
-        dir = aux.concat("@gmail.com"); 
-        write(dir, dir);
+        dato[0] = aux.concat("@gmail.com"); 
         print("Ingresa la contraseña: ");
-        con = leer.nextLine();
-        write(dir, con);
+        dato[1] = leer.nextLine();
         print("Ingresa tu nombre: ");
-        nom = leer.nextLine();
-        write(dir, nom);
+        dato[2] = leer.nextLine();
         print("Ingresa tu apellido: ");
-        ape = leer.nextLine();
-        write(dir, ape);
-        nacimiento();
+        dato[3] = leer.nextLine();
+        //nacimiento();
     }
     
     public void nacimiento() throws IOException{
@@ -43,17 +38,22 @@ public class Prueba {
             print("Ingresa dia de nacimiento: ");
             a = leer.nextLine();
         }while(!isNum(a));
-        write(dir, a);
+        dato[4] = leer.nextLine();
         do{
             print("Ingresa mes de nacimiento: ");
             a = leer.nextLine();
         }while(!isNum(a));
-        write(dir, a);
+        dato[5] = leer.nextLine();
         do{
             print("Ingresa año de nacimiento: ");
             a = leer.nextLine();
         }while(!isNum(a));
-        write(dir, a);
+        dato[6] = leer.nextLine();
+    }
+    
+    void crearCorreo()throws IOException{
+        for (String dato1 : dato) 
+            write(dato[0], dato1);
     }
     
     public static void main(String[] args) throws IOException {
