@@ -9,16 +9,7 @@ public class List extends Node implements Listable{
     public List(){ this.nodo = null; }
 
     @Override
-    public void emptyList(List l) {
-        try {
-            nodo = null;
-        }catch(Exception ex){
-            System.out.println("Error in emptyList");
-        } 
-    }
-
-    @Override
-    public boolean isEmpty(List l) {
+    public boolean isEmpty() {
         try{
             return this.nodo == null;
         }catch(Exception ex){
@@ -28,15 +19,22 @@ public class List extends Node implements Listable{
     }
 
     @Override
-    public int size(List l) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int size() {
+        int c = 0;
+        while(nodo !=  null)
+            c++;
+        return c;
     }
 
     @Override
-    public List insert(List l, Object o, Node n) {
-        if(!isEmpty(l))
-            nodo = new Node(o, n);
-        return l.getList();
+    public void insert(Object o, Node n) {
+        try{
+            if(isEmpty()){
+               nodo = new Node(o, n); 
+            }
+        }catch(Exception ex){
+            System.out.println("Error en insert " + ex);
+        }
     }
 
     @Override
