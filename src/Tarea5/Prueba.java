@@ -6,60 +6,154 @@ import java.util.Scanner;
 public class Prueba {
     FileWriter fw;
     BufferedWriter bw;
-    FileReader r;
+    FileReader fr;
     BufferedReader br;
-    String dato[] = new String[7];
+    String dir, con, sex, nom, ape;
+    String datos[] = new String[6];
     Scanner leer = new Scanner(System.in);
 
     public void meta(){
         print("Realizar un programa que permita probar el ADT Email.");
         print("El programa deberá de permitirle al usuario crear un correo");
         print("electronico o acceder a su cuenta ya previamente creada"); 
-        print("demas de permitirle modificar su cueta en todo momento.");    
+        print("ademas de permitirle modificar su cuenta.");    
     }
     
     public void registrarse() throws IOException{
         print("Ingresa la direccion de correo: ");
         String aux = leer.nextLine();
-        dato[0] = aux.concat("@gmail.com"); 
+        datos[0] = aux.concat("@gmail.com");
         print("Ingresa la contraseña: ");
-        dato[1] = leer.nextLine();
+        datos[1] = leer.nextLine();
         print("Ingresa tu nombre: ");
-        dato[2] = leer.nextLine();
+        datos[2] = leer.nextLine();
         print("Ingresa tu apellido: ");
-        dato[3] = leer.nextLine();
-        //nacimiento();
+        datos[3] = leer.nextLine();
+        datos[4] = nacimiento();
+        print("Ingresa tu sexo[M/F]: ");
+        datos[5] = leer.nextLine();
+        write(datos[0], datos);
     }
     
-    public void nacimiento() throws IOException{
-        String a;
+    public String nacimiento() {
+        String d, m, y;
         
         do{
             print("Ingresa dia de nacimiento: ");
-            a = leer.nextLine();
-        }while(!isNum(a));
-        dato[4] = leer.nextLine();
+            d = leer.nextLine();
+        }while(!isNum(d));
         do{
             print("Ingresa mes de nacimiento: ");
-            a = leer.nextLine();
-        }while(!isNum(a));
-        dato[5] = leer.nextLine();
+            m = leer.nextLine();
+        }while(!isNum(m));
         do{
             print("Ingresa año de nacimiento: ");
-            a = leer.nextLine();
-        }while(!isNum(a));
-        dato[6] = leer.nextLine();
+            y = leer.nextLine();
+        }while(!isNum(y));
+        return d + "/" + m + "/" + y;
     }
     
-    void crearCorreo()throws IOException{
-        for (String dato1 : dato) 
-            write(dato[0], dato1);
+    public void write(String name, String[] info) throws IOException{
+        for(String i: info)
+           write(name, i);
+    }
+
+    public void cambiarContra(Email e) {
+        String c1, c2;
+        
+        do{
+            print("Ingrese la antigua contraseña: ");
+            c1 = leer.nextLine();
+            print("Ingrese la nueva contraseña: ");
+            c2 = leer.nextLine();
+        }while(!e.cambiarContraseña(c1, c2));
+        datos[1] = e.getContraseña();     
     }
     
+    public void cambiarCumpleaños(Email e){
+        e.cambiarCumpleaños(nacimiento());
+        datos[4] = e.getCumple();   
+    }
+    
+    public void cambiarSexo(Email e){
+        String s;
+        
+        print("Ingresa tu sexo[M/F]: ");
+        s = leer.nextLine();
+        e.cambiarSexo(s);
+        datos[5] = e.getSexo();
+    }
+    
+    public void navegabilidad() throws IOException{
+        Email e;
+        String op, di;
+        
+        do{
+            int des = menu();
+            switch(des){
+                case 1: registrarse(); break;
+                case 2:
+                    do{
+                        print("Direccion de correo: ");
+                        di = leer.nextLine();
+                        datos = read(di);
+                        e = new Email(datos[0], datos[1], datos[2], datos[3],
+                            datos[4],datos[5]);
+                        print("Contraseña: ");
+                        con = leer.nextLine();
+                    }while(!e.accesar(datos[0], con));
+                    System.out.println("Se elimino");
+                    int des2 = submenu();
+                    switch(des2){
+                        case 1:cambiarContra(e);break;
+                        case 2:cambiarCumpleaños(e);break;
+                        case 3:cambiarSexo(e);break;
+                        default: break;
+                    }
+                    write(di, datos);
+                    break;
+                case 3: break;
+                default: 
+                    print("Opcion invalida");
+                    break;
+            }
+            print("Deseas realizar otra accion?[s/n]: ");
+            op = leer.nextLine();
+        }while(op.equalsIgnoreCase("s"));
+    }
+    
+    public int menu(){
+        String des;
+        
+        do{
+            print("Bienvenido\n");
+            print("Presiona 1 para crear un nuevo correo. \n");
+            print("Presiona 2 para acceder a tu cuenta. \n");
+            print("¿Que deseas hacer?:  ");
+            des = leer.nextLine();
+        }while(!isNum(des));
+        return Integer.parseInt(des);
+    }
+    
+    public int submenu(){
+        String des;
+        
+        do{
+            print("Bienvenido \n");
+            print("Presiona 1 para cambiar la contraseña. \n");
+            print("Presiona 2 para cambiar tu fecha de cumpleaños. \n");
+            print("Presiona 3 para cambiar tu sexo. \n");
+            print("¿Que deseas hacer?:  ");
+            des = leer.nextLine();
+        }while(!isNum(des));
+        return Integer.parseInt(des);
+    }
+
     public static void main(String[] args) throws IOException {
         Prueba p = new Prueba();
         
-        p.registrarse();
+        p.navegabilidad();
+
     }
     
     void openOutFile(String correo) throws IOException {
@@ -69,24 +163,40 @@ public class Prueba {
     
     void openInFile(String correo) {
         try {
-            r = new FileReader("emails\\" + correo + ".txt");
-            br = new BufferedReader(r);
+            fr = new FileReader("emails\\" + correo + ".txt");
+            br = new BufferedReader(fr);
         } catch (FileNotFoundException ex) {
             System.err.println("File not found");
         }
     }
     
-    void write(String cuenta, String dato) throws IOException{
+    void write(String cuenta, Object dato) throws IOException{
         try{
             openOutFile(cuenta);
             bw.write(dato + ",");
+            bw.newLine();
             bw.flush();
         }catch(IOException ex){
-            System.err.println("Error al crear la cuenta");
+            System.err.println("Error con la cuenta");
         }finally{
             fw.close();
             bw.close();
         }
+    }
+    
+    String[] read(String cuenta) throws IOException{
+        String aux, a;
+        StringBuilder c = new StringBuilder();
+ 
+        openInFile(cuenta);
+        while((a = br.readLine()) != null){
+            c.append(a);
+        }
+        aux = c.toString();
+        fr.close();
+        br.close();
+        
+        return aux.split(",");
     }
     
     boolean isNum(String s){
@@ -94,7 +204,8 @@ public class Prueba {
             Integer.parseInt(s);
             return true;
         }catch(NumberFormatException ex){
-            System.err.println("No es numero, Intentelo de nuevo");
+            System.err.println("No es numero, "
+                    + "Intentelo de nuevo");
             return false;
         }
     }

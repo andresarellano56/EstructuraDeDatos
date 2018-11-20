@@ -1,8 +1,18 @@
 package Tarea5;
 
 public class Email implements Emailable{
-    private String nombre, apellido, sexo, direccion, contraseña;
-    private int d, m, y;
+    private String nombre, apellido, sexo, direccion, contraseña, cumple;
+    
+    public Email(){}
+    
+    public Email(String d, String c, String n, String a, String cum, String s){
+        this.direccion = d;
+        this.contraseña = c;
+        this.nombre = n;
+        this.apellido = a;
+        this.sexo = s;
+        this.cumple = cum;
+    }
     
     public String getNombre() {return nombre;}
     public void setNombre(String nombre) {this.nombre = nombre;}
@@ -14,12 +24,9 @@ public class Email implements Emailable{
     public void setDireccion(String direccion) {this.direccion = direccion;}
     public String getContraseña() {return contraseña;}
     public void setContraseña(String contraseña) {this.contraseña = contraseña;}
-    public int getD() {return d;}
-    public void setD(int d) {this.d = d;}
-    public int getM() {return m;}
-    public void setM(int m) {this.m = m;}
-    public int getY() {return y;}
-    public void setY(int y) {this.y = y;}
+    public String getCumple() { return cumple; }
+    public void setCumple(String cumple) { this.cumple = cumple; }
+    
 
     @Override
     public boolean accesar(String di, String c) {
@@ -42,14 +49,11 @@ public class Email implements Emailable{
     @Override
     public void mandarMensaje(String di, String msm) {
         
-        
     }
 
     @Override
-    public void cambiarCumpleaños(int d, int m, int y) {
-        this.setD(d);
-        this.setM(m);
-        this.setY(y);
+    public void cambiarCumpleaños(String nac) {
+        this.setCumple(nac);
     }
 
     @Override

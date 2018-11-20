@@ -61,15 +61,16 @@
         Escribir("Bienvenido");
         Escribir("Presiona 1 para crear un nuevo correo. ");
         Escribir("Presiona 2 para acceder a tu cuenta. ");
+        Escribir("Presiona 3 para acceder a tu cuenta. ");
         Escribir(¿Que deseas hacer?" ); des = ?
         guardarComoInt(des);
         Según(des) empezar
             caso 1:
                 registrarse();
-                operaciones();
             caso 2:
                 accesar();
-                operaciones();
+            caso 3:
+                break;
             default:
                 Escribir("Opción invalida");
         terminar
