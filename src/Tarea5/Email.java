@@ -47,15 +47,7 @@ public class Email implements Emailable{
     }
 
     @Override
-    public void mandarMensaje(String di, String msm) {
-        
-    }
-
-    @Override
-    public void cambiarCumpleaños(String nac) {
-        this.setCumple(nac);
-    }
-
+    public void cambiarCumpleaños(String nac) {this.setCumple(nac);}
     @Override
     public void cambiarSexo(String s) { this.setSexo(s);}
            

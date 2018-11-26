@@ -1,7 +1,7 @@
 1.  Meta: Realizar un programa que permita probar el ADT Email.
             El programa deberá de permitirle al usuario crear un correo
             electronico o acceder a su cuenta ya previamente creada, ademas de
-            permitirle modificar su cueta en todo momento.
+            permitirle modificar su cuenta
 
 2. Datos: ir al paso 5
     2.1 regristrarse() empezar
@@ -25,17 +25,10 @@
             guardarComoInt(m);
             Escribir("Ingresa dia de nacimiento: "); y = ?
             guardarComoInt(y);
-        terminar
-
-    2.3 accesar() empezar
-            Escribir("Ingresa tu direccion de correo: "); dir = ?
-            guardarComoString(dir);
-            Escribir("Ingresa tu contraseña: "); con = ?
-            guardarComoString(con);
-        terminar           
+        terminar         
 
 3. Procidimientos: ir al paso 5:
-    3.1 cambiarContra() empezar
+    3.1 cambiarContra(Email e) empezar
             Escribir("Ingresa Contraseña vieja"); c1 = ?
             guardarComoString(c1);
             Escribir("Ingresa Contraseña nueva"); c2 = ?
@@ -43,13 +36,13 @@
             e.cambiarContraseña(c1, c2);
     terminar
 
-    3.2 cambiarSex() empezar
+    3.2 cambiarSex(Email e) empezar
             Escrbir("Ingresa tu sexo[M/F]: "); s = ?
             guardarComoString(s);
             e.cambiarSexo(s);
     terminar
 
-    3.3 cambiarCumple() empezar
+    3.3 cambiarCumple(Email e) empezar
         nacimiento();
         e.cambiarCumpleaños(d, m, y);
     terminar
@@ -57,26 +50,57 @@
 4. Resultados: No hay resultados
 
 5. Navegabilidad: empezar
-    Hacer empezar
-        Escribir("Bienvenido");
-        Escribir("Presiona 1 para crear un nuevo correo. ");
-        Escribir("Presiona 2 para acceder a tu cuenta. ");
-        Escribir("Presiona 3 para acceder a tu cuenta. ");
-        Escribir(¿Que deseas hacer?" ); des = ?
-        guardarComoInt(des);
-        Según(des) empezar
-            caso 1:
-                registrarse();
-            caso 2:
-                accesar();
-            caso 3:
-                break;
-            default:
-                Escribir("Opción invalida");
-        terminar
-        Escribir("Deseas realizar otra opcion?[s/n]"); op = ?;
-        guardarComoString(op);
-    terminar Mientras(op == "s");
-terminar
-        
-            
+
+    5.1 int menu() empezar
+        Hacer empezar
+            Escribir("Bienvenido\n");
+            Escribir("Presiona 1 para crear un nuevo correo. \n");
+            Escribir("Presiona 2 para acceder a tu cuenta. \n");
+            Escribir("¿Que deseas hacer?:  "); des = ?
+            guardarComoString(des);
+        terminar Mientras(des no sea numero);
+        return Integer.parseInt(des);
+    terminar
+
+    5.2 int submenu() empezar
+        Hacer empezar
+            Escribir("Presiona 1 para cambiar la contraseña. \n");
+            Escribir("Presiona 2 para cambiar tu fecha de cumpleaños. \n");
+            Escribir("Presiona 3 para cambiar tu sexo. \n");
+            Escribir("Presiona 4 para cerrar sesion. \n");
+            Escribir("¿Que deseas hacer?:  "); des = ?
+            guardarComoString(des);
+        terminar Mientras(des no sea numero);
+        return Integer.parseInt(des);
+    terminar
+
+    5.3 navegabilidad() empezar
+        Hacer empezar
+            des = menu();
+            Según(des) empezar
+                caso 1: registrarse(); romper caso 1;
+                caso 2:
+                    Hacer empezar
+                        Escribir("Direccion de correo: "); di = ?
+                        guardarComoString(di);
+                        datos = read(di);
+                        e = new Email(datos[0], datos[1], datos[2], 
+                                datos[3], datos[4],datos[5]);
+                        Escribir("Contraseña: "); con = ?
+                        guardarComoString(con);
+                    terminar Mientras(!e.accesar(datos[0], con));
+                    Hacer empezar
+                        des2 = submenu();
+                        Según(des2) empezar
+                            caso 1:cambiarContra(e);romper caso 1;
+                            caso 2:cambiarCumpleaños(e);romper caso 2;
+                            caso 3:cambiarSexo(e);romper caso 3;
+                            default: break;
+                        terminar
+                    terminar Mientras(des2 != 4);
+                default: Escribir("Opción invalida"); romper default;
+            terminar
+            Escribir("Deseas realizar otra opcion?[s/n]"); op = ?;
+            guardarComoString(op);
+        terminar Mientras(op == "s");
+    terminar

@@ -54,8 +54,11 @@ public class Prueba {
     }
     
     public void write(String name, String[] info) throws IOException{
+        String aux = "";
+        
         for(String i: info)
-           write(name, i);
+           aux = aux.concat(i+",");
+        write(name, aux);
     }
 
     public void cambiarContra(Email e) {
@@ -87,9 +90,10 @@ public class Prueba {
     public void navegabilidad() throws IOException{
         Email e;
         String op, di;
+        int des, des2;
         
         do{
-            int des = menu();
+            des = menu();
             switch(des){
                 case 1: registrarse(); break;
                 case 2:
@@ -97,22 +101,22 @@ public class Prueba {
                         print("Direccion de correo: ");
                         di = leer.nextLine();
                         datos = read(di);
-                        e = new Email(datos[0], datos[1], datos[2], datos[3],
-                            datos[4],datos[5]);
+                        e = new Email(datos[0], datos[1], datos[2], 
+                                datos[3], datos[4],datos[5]);
                         print("Contraseña: ");
                         con = leer.nextLine();
                     }while(!e.accesar(datos[0], con));
-                    System.out.println("Se elimino");
-                    int des2 = submenu();
-                    switch(des2){
-                        case 1:cambiarContra(e);break;
-                        case 2:cambiarCumpleaños(e);break;
-                        case 3:cambiarSexo(e);break;
-                        default: break;
-                    }
-                    write(di, datos);
+                    do{
+                        des2 = submenu();
+                        switch(des2){
+                            case 1:cambiarContra(e);break;
+                            case 2:cambiarCumpleaños(e);break;
+                            case 3:cambiarSexo(e);break;
+                            default: break;
+                        }
+                        write(di, datos);
+                    }while(des2 != 4);  
                     break;
-                case 3: break;
                 default: 
                     print("Opcion invalida");
                     break;
@@ -139,10 +143,10 @@ public class Prueba {
         String des;
         
         do{
-            print("Bienvenido \n");
             print("Presiona 1 para cambiar la contraseña. \n");
             print("Presiona 2 para cambiar tu fecha de cumpleaños. \n");
             print("Presiona 3 para cambiar tu sexo. \n");
+            print("Presiona 4 para cerrar sesion. \n");
             print("¿Que deseas hacer?:  ");
             des = leer.nextLine();
         }while(!isNum(des));
@@ -153,11 +157,10 @@ public class Prueba {
         Prueba p = new Prueba();
         
         p.navegabilidad();
-
     }
     
     void openOutFile(String correo) throws IOException {
-        fw = new FileWriter("emails\\" + correo + ".txt",true);
+        fw = new FileWriter("emails\\" + correo + ".txt",false);
         bw = new BufferedWriter(fw);
     }
     
@@ -170,11 +173,10 @@ public class Prueba {
         }
     }
     
-    void write(String cuenta, Object dato) throws IOException{
+    void write(String cuenta, String dato) throws IOException{
         try{
             openOutFile(cuenta);
-            bw.write(dato + ",");
-            bw.newLine();
+            bw.write(dato);
             bw.flush();
         }catch(IOException ex){
             System.err.println("Error con la cuenta");
@@ -189,13 +191,11 @@ public class Prueba {
         StringBuilder c = new StringBuilder();
  
         openInFile(cuenta);
-        while((a = br.readLine()) != null){
+        while((a = br.readLine()) != null)
             c.append(a);
-        }
         aux = c.toString();
         fr.close();
         br.close();
-        
         return aux.split(",");
     }
     

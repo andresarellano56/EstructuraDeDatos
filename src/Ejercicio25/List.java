@@ -1,71 +1,113 @@
 package Ejercicio25;
 
-public class List extends Node implements Listable{
-    private Node nodo;
-    private List lista;
+public class List implements Listable {
+    Node head, previous, nuevo, siguiente; 
     
-    public List getList(){ return this.lista; }
-    
-    public List(){ this.nodo = null; }
+    public List(){ this.head = null; }
 
     @Override
     public boolean isEmpty() {
-        try{
-            return this.nodo == null;
-        }catch(Exception ex){
-            System.out.println("Error in isEmpty");
-            return false;
-        }   
+        return head == null;
     }
 
     @Override
     public int size() {
         int c = 0;
-        while(nodo !=  null)
-            c++;
+        
+        if(!isEmpty()){
+            Node aux = head;
+            while(aux != null){
+                c++;
+                aux = aux.getNext();
+            }
+        }
         return c;
     }
-
+    
     @Override
     public void insert(Object o, Node n) {
-        try{
-            if(isEmpty()){
-               nodo = new Node(o, n); 
-            }
-        }catch(Exception ex){
-            System.out.println("Error en insert " + ex);
+        if(n == null) //Inserta el primer nodo de la lista
+            head = new Node(o);
+        else { //Inserta un nodo en cualquier lugar de la lista
+            nuevo = new Node(o, n);
+            Node aux = head;
+            while(aux != null && aux.getInfo() != n.getInfo())
+                aux = aux.getNext();
+            nuevo.next = aux.getNext();
+            aux.next = nuevo;
         }
     }
 
     @Override
-    public Node find(Object o, List l) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Node trace(Object o) { //Busca el nodo especifico dentro de la lista
+        nuevo = new Node(o);
+        Node aux = head;
+        while(aux != null && !aux.getInfo().equals(o))
+            aux = aux.getNext();
+        return aux;
     }
 
     @Override
-    public Node delete(Object o, List l) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Node delete(Object o){ //Borra un nodo de la lista
+        if(!isEmpty() && trace(o) != null){
+            Node aux = head;
+            while(aux != null){
+                if(aux.getInfo().equals(o)) break;
+                previous = aux;
+                aux = aux.getNext();
+            }
+            if(aux != null){
+                if(aux == head)
+                    head = aux.getNext();
+                else
+                    previous.next = aux.getNext();
+            } else previous.next = null;
+            return aux;
+        }
+        else return null;
     }
 
     @Override
-    public Node previous(List l, Node p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Node behind(Node n) {//Devuelve el anterior al ingresado
+        if(!isEmpty() && trace(n.getInfo()) != null){
+            Node aux = head;
+            while(aux != null){
+                if(aux.getInfo().equals(n.getInfo())) break;
+                previous = aux;
+                aux = aux.getNext();
+            }     
+        }
+        return previous;
     }
 
     @Override
-    public Node fist(List l) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Node first() { //Devuelve el primer elemento de la lista
+        if(!isEmpty())
+            return head;
+        else return null;
     }
 
     @Override
-    public Node last(List l) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Node last() { //Devuelve el ultimo elemento de la lista
+        if(!isEmpty()){
+            Node aux = head;
+            while(aux != null)
+                if(aux.getNext() == null) break;
+                else aux = aux.getNext();
+            return aux;
+        }else return null;
     }
 
     @Override
-    public Node next(List l, Node p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Node next(Node n) {//Devuelve el siguiente nodo del ingresado
+        if(!isEmpty() && trace(n.getInfo()) != null){
+            Node aux = head;
+            while(aux != null){
+                if(aux.getInfo().equals(n.getInfo())) break;
+                aux = aux.getNext();
+                siguiente = aux.getNext();
+            }     
+        }
+        return siguiente;
     }
-
-    
 }
