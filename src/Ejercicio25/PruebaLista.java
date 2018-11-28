@@ -8,7 +8,7 @@ public class PruebaLista {
         Node n2 = new Node(":c");
         Node n3 = new Node(":/");
         
-        miLista.insert(n1.getInfo(), null);
+        miLista.insert(n1.getInfo());
         miLista.insert(n2.getInfo(), n1);
         miLista.insert(n3.getInfo(), n2);
     
@@ -21,7 +21,7 @@ public class PruebaLista {
 //        System.out.println(miLista.first().getInfo());
 //        System.out.println(miLista.last().getInfo());
 
-          System.out.println(miLista.next(n1).getInfo());
+          System.out.println(miLista.next(n3));
     }
     
 }

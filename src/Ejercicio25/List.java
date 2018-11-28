@@ -25,16 +25,21 @@ public class List implements Listable {
     }
     
     @Override
+    public void insert(Object o) { head = new Node(o);}
+    
+    @Override
     public void insert(Object o, Node n) {
         if(n == null) //Inserta el primer nodo de la lista
             head = new Node(o);
-        else { //Inserta un nodo en cualquier lugar de la lista
+        else {//Inserta un nodo en cualquier lugar de la lista
             nuevo = new Node(o, n);
             Node aux = head;
             while(aux != null && aux.getInfo() != n.getInfo())
                 aux = aux.getNext();
-            nuevo.next = aux.getNext();
-            aux.next = nuevo;
+            if(aux != null){
+                nuevo.next = aux.getNext();
+                aux.next = nuevo;
+            }
         }
     }
 
@@ -69,7 +74,8 @@ public class List implements Listable {
 
     @Override
     public Node behind(Node n) {//Devuelve el anterior al ingresado
-        if(!isEmpty() && trace(n.getInfo()) != null){
+        try{
+            if(!isEmpty() && trace(n.getInfo()) != null){
             Node aux = head;
             while(aux != null){
                 if(aux.getInfo().equals(n.getInfo())) break;
@@ -77,7 +83,11 @@ public class List implements Listable {
                 aux = aux.getNext();
             }     
         }
+        }catch(NullPointerException nl){
+            err("El primer nodo no tiene ningun predecesor " + nl);
+        }
         return previous;
+        
     }
 
     @Override
@@ -100,14 +110,24 @@ public class List implements Listable {
 
     @Override
     public Node next(Node n) {//Devuelve el siguiente nodo del ingresado
-        if(!isEmpty() && trace(n.getInfo()) != null){
+        try{
+            if(!isEmpty() && trace(n.getInfo()) != null){
             Node aux = head;
             while(aux != null){
-                if(aux.getInfo().equals(n.getInfo())) break;
-                aux = aux.getNext();
-                siguiente = aux.getNext();
+                if(!aux.getInfo().equals(n.getInfo()))
+                    aux = aux.getNext();
+                else {
+                    siguiente = aux.getNext();
+                    break;
+                }
             }     
+        }
+        }catch(NullPointerException nl){
+            err("El ultimo nodo apunta a null " + nl);
         }
         return siguiente;
     }
+ 
+    public void out(String s){System.out.print(s);}
+    public void err(String s){System.err.print(s);}
 }
