@@ -1,11 +1,13 @@
 package Tarea5;
 
+import java.util.Date;
+
 public class Email implements Emailable{
-    private String nombre, apellido, sexo, direccion, contraseña, cumple;
-    
+    private String nombre, apellido, sexo, direccion, contraseña;
+    private Date cumple;
     public Email(){}
     
-    public Email(String d, String c, String n, String a, String cum, String s){
+    public Email(String d, String c, String n, String a, String s, Date cum){
         this.direccion = d;
         this.contraseña = c;
         this.nombre = n;
@@ -24,8 +26,8 @@ public class Email implements Emailable{
     public void setDireccion(String direccion) {this.direccion = direccion;}
     public String getContraseña() {return contraseña;}
     public void setContraseña(String contraseña) {this.contraseña = contraseña;}
-    public String getCumple() { return cumple; }
-    public void setCumple(String cumple) { this.cumple = cumple; }
+    public Date getCumple() { return cumple; }
+    public void setCumple(Date cumple) { this.cumple = cumple; }
     
 
     @Override
@@ -44,13 +46,7 @@ public class Email implements Emailable{
             print("La contraseña no ha sido cambiada");
             return false;
         }
-    }
-
-    @Override
-    public void cambiarCumpleaños(String nac) {this.setCumple(nac);}
-    @Override
-    public void cambiarSexo(String s) { this.setSexo(s);}
-           
+    }      
     public void print(String s){ System.out.print(s + "\n"); }
     
 }

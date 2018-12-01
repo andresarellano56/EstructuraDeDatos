@@ -68,8 +68,7 @@ public class List implements Listable {
                     previous.next = aux.getNext();
             } else previous.next = null;
             return aux;
-        }
-        else return null;
+        }else return null;
     }
 
     @Override
