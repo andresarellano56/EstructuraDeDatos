@@ -5,26 +5,28 @@
 
 2. Datos: ir al paso 5
     2.1 regristrarse() empezar
-            Escribir("Ingresa tu direccion de correo: "); dir = ?
+            Escribir("Ingresa tu direccion de correo: "); datos[0] = ?
             guardarComoString(dir);
-            Escribir("Ingresa tu contraseña: "); con = ?
+            Escribir("Ingresa tu contraseña: "); datos[1] = ?
             guardarComoString(con);
-            Escribir("Dame tu nombre: "); nom = ?
+            Escribir("Dame tu nombre: "); datos[2] = ?
             guardarComoString(nom);
-            Escribir("Dame tus Apellidos: "): ape = ?
+            Escribir("Dame tus Apellidos: "): datos[3] = ?
             guardarComoString(ape);
-            Escribir("Escribe tu sexo[M/F]: "); sex = ?
+            Escribir("Escribe tu sexo[M/F]: "); datos[4] = ?
             guardarComoString(sex);
-            nacimiento();
+            datos[5] = nacimiento();
         terminar
 
-    2.2 nacimiento() empezar
+    2.2 String nacimiento() empezar  
             Escribir("Ingresa dia de nacimiento: "); d = ?
             guardarComoInt(d);
             Escribir("Ingresa dia de nacimiento: "); m = ?
             guardarComoInt(m);
             Escribir("Ingresa dia de nacimiento: "); y = ?
             guardarComoInt(y);
+            date = d + "/" + m + "/" + y;
+            regresar date;
         terminar         
 
 3. Procidimientos: ir al paso 5:
@@ -34,17 +36,6 @@
             Escribir("Ingresa Contraseña nueva"); c2 = ?
             guardarComoString(c2);        
             e.cambiarContraseña(c1, c2);
-    terminar
-
-    3.2 cambiarSex(Email e) empezar
-            Escrbir("Ingresa tu sexo[M/F]: "); s = ?
-            guardarComoString(s);
-            e.cambiarSexo(s);
-    terminar
-
-    3.3 cambiarCumple(Email e) empezar
-        nacimiento();
-        e.cambiarCumpleaños(d, m, y);
     terminar
 
 4. Resultados: No hay resultados
@@ -65,9 +56,7 @@
     5.2 int submenu() empezar
         Hacer empezar
             Escribir("Presiona 1 para cambiar la contraseña. \n");
-            Escribir("Presiona 2 para cambiar tu fecha de cumpleaños. \n");
-            Escribir("Presiona 3 para cambiar tu sexo. \n");
-            Escribir("Presiona 4 para cerrar sesion. \n");
+            Escribir("Presiona 2 para cerrar sesion. \n");
             Escribir("¿Que deseas hacer?:  "); des = ?
             guardarComoString(des);
         terminar Mientras(des no sea numero);
@@ -93,11 +82,9 @@
                         des2 = submenu();
                         Según(des2) empezar
                             caso 1:cambiarContra(e);romper caso 1;
-                            caso 2:cambiarCumpleaños(e);romper caso 2;
-                            caso 3:cambiarSexo(e);romper caso 3;
                             default: break;
                         terminar
-                    terminar Mientras(des2 != 4);
+                    terminar Mientras(des2 != 2);
                 default: Escribir("Opción invalida"); romper default;
             terminar
             Escribir("Deseas realizar otra opcion?[s/n]"); op = ?;

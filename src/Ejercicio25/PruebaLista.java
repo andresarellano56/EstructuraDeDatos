@@ -7,10 +7,12 @@ public class PruebaLista {
         Node n1 = new Node(":D");
         Node n2 = new Node(":c");
         Node n3 = new Node(":/");
+        Node n4 = new Node(":3");
         
         miLista.insert(n1.getInfo());
-        miLista.insert(n2.getInfo(), n1);
-        miLista.insert(n3.getInfo(), n2);
+        miLista.insert(n2.getInfo());
+        miLista.insert(n3.getInfo());
+        miLista.insert(n4.getInfo());
     
 //        System.out.println(miLista.size());
 //        System.out.println(miLista.isEmpty());
@@ -21,7 +23,7 @@ public class PruebaLista {
 //        System.out.println(miLista.first().getInfo());
 //        System.out.println(miLista.last().getInfo());
 
-          System.out.println(miLista.next(n3));
+          System.out.println(miLista.last().getNext()==null);
     }
     
 }

@@ -6,9 +6,7 @@ public class List implements Listable {
     public List(){ this.head = null; }
 
     @Override
-    public boolean isEmpty() {
-        return head == null;
-    }
+    public boolean isEmpty() {return head == null;}
 
     @Override
     public int size() {
@@ -25,27 +23,23 @@ public class List implements Listable {
     }
     
     @Override
-    public void insert(Object o) { head = new Node(o);}
-    
-    @Override
-    public void insert(Object o, Node n) {
-        if(n == null) //Inserta el primer nodo de la lista
+    public void insert(Object o) {
+        if(head == null) //Inserta el primer nodo de la lista
             head = new Node(o);
         else {//Inserta un nodo en cualquier lugar de la lista
-            nuevo = new Node(o, n);
+            nuevo = new Node(o);
             Node aux = head;
-            while(aux != null && aux.getInfo() != n.getInfo())
+            while(aux != null){
+                if(aux.getNext() == null) break;
                 aux = aux.getNext();
-            if(aux != null){
-                nuevo.next = aux.getNext();
-                aux.next = nuevo;
             }
+            nuevo.next = aux.getNext();
+            aux.next = nuevo;            
         }
     }
 
     @Override
     public Node trace(Object o) { //Busca el nodo especifico dentro de la lista
-        nuevo = new Node(o);
         Node aux = head;
         while(aux != null && !aux.getInfo().equals(o))
             aux = aux.getNext();
@@ -100,10 +94,10 @@ public class List implements Listable {
     public Node last() { //Devuelve el ultimo elemento de la lista
         if(!isEmpty()){
             Node aux = head;
-            while(aux != null)
+            while(aux != null){
                 if(aux.getNext() == null) break;
                 else aux = aux.getNext();
-            return aux;
+            }return aux;
         }else return null;
     }
 
