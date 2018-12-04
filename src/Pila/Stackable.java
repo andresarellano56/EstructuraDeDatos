@@ -1,11 +1,11 @@
 
-package Ejercicio34;
+package Pila;
 
 public interface Stackable {
     
     public void push(Object o);
     public Node peek();
-    public Object pop();
+    public void pop();
     public int size();
     public boolean trace(Object o);
     public boolean isEmpty();

@@ -1,5 +1,8 @@
-package Ejercicio34;
 
+package Pila;
+/**
+ * @author andres & roger
+ */
 public class Stack implements Stackable{
     private Node base, anterior, siguiente;
     
@@ -7,7 +10,17 @@ public class Stack implements Stackable{
 
     @Override
     public void push(Object o) {
-        base = new Node(o, base);
+        if(base == null)
+            base = new Node(o);
+        else{
+            Node aux = base;
+            while(aux!=null)
+                if(aux.getNext() == null) break;
+                else aux = aux.getNext();
+            Node nuevo = new Node(o);
+            nuevo.next = aux.getNext();
+            aux.next = nuevo;
+        }
     }
 
     @Override
@@ -23,13 +36,16 @@ public class Stack implements Stackable{
     }
 
     @Override
-    public Object pop() {
-        if (isEmpty())
-        return null;
-
-        Object dato = base.getInfo();
-        base = base.getNext();
-        return dato;
+    public void pop() {
+        if(!isEmpty()){
+            if(base.getNext() == null)
+                base = null;
+            else{
+                Node aux = peek();
+                anterior = behind(aux);
+                anterior.next = null; 
+            }
+        }
     }
 
     @Override
@@ -50,8 +66,7 @@ public class Stack implements Stackable{
         if(!isEmpty()){
             Node aux = base;
             while(aux != null && !aux.getInfo().equals(o))
-                if(aux.getNext() == null) break;
-                else aux = aux.getNext();
+                aux = aux.getNext();
             return aux == null;
         }
         else return true;
@@ -83,39 +98,16 @@ public class Stack implements Stackable{
     @Override
     public Node next(Node n) {
         if(!isEmpty() && !trace(n.getInfo())){
-            Node aux = base;
-            while(aux != null){
-                if(!aux.getInfo().equals(n.getInfo()))
-                    aux = aux.getNext();
-                else {
-                    siguiente = aux.getNext();
-                    break;
-                }
-            }     
+        Node aux = base;
+        while(aux != null){
+            if(!aux.getInfo().equals(n.getInfo()))
+                aux = aux.getNext();
+            else {
+                siguiente = aux.getNext();
+                break;
+            }
+        }     
         }
         return siguiente;
-    }
-    
-     public java.util.Iterator iterador() {
-       return new MiIterador(); 
-    }
-  
-    private class MiIterador implements java.util.Iterator {
-	private Node posicion = base;
-
-	public boolean hasNext() { return posicion != null;}
-
-	public Object next() { 
-	    if (hasNext()) {
-		Object o = posicion.getInfo();
-		posicion = posicion.getNext();
-		return o;
-	    }
-	    return null;
-	}
-
-	public void remove() {
-	    throw new IllegalStateException();
-	}
     }
 }
